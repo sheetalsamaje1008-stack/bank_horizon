@@ -22,7 +22,7 @@ export const signIn = async ({ email, password }: signInProps) => {
 
     const response = await account.createEmailPasswordSession(email, password);
 
-    return parseStringify(response);
+    return parseStringify(user);
   } catch (error) {
     console.error('Error', error);
   }
