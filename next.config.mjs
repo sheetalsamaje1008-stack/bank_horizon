@@ -15,9 +15,12 @@ const sentryConfig = withSentryConfig(nextConfig, {
 
 // Suppresses source map uploading logs during build
 silent: true,
-org: "jsm-x9",
-project: "javascript-nextjs",
-dryRun: !process.env.SENTRY_AUTH_TOKEN,
+org: process.env.SENTRY_ORG || "student-ji1",
+project: process.env.SENTRY_PROJECT || "javascript-nextjs",
+dryRun: !process.env.SENTRY_AUTH_TOKEN || process.env.SENTRY_DRY_RUN === 'true',
+errorHandler: (err, invokeErr, compilation) => {
+  compilation.warnings.push('Sentry CLI Plugin: ' + err.message);
+},
 }, {
 // For all available options, see:
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
