@@ -9,7 +9,7 @@ const nextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
+const sentryConfig = withSentryConfig(nextConfig, {
 // For all available options, see:
 // https://github.com/getsentry/sentry-webpack-plugin#options
 
@@ -17,6 +17,7 @@ export default withSentryConfig(nextConfig, {
 silent: true,
 org: "jsm-x9",
 project: "javascript-nextjs",
+dryRun: !process.env.SENTRY_AUTH_TOKEN,
 }, {
 // For all available options, see:
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
@@ -44,4 +45,10 @@ disableLogger: true,
 // https://docs.sentry.io/product/crons/
 // https://vercel.com/docs/cron-jobs
 automaticVercelMonitors: true,
+
+// Disable Sentry webpack plugin when no auth token is provided to prevent missing auth token warnings
+disableServerWebpackPlugin: !process.env.SENTRY_AUTH_TOKEN,
+disableClientWebpackPlugin: !process.env.SENTRY_AUTH_TOKEN,
 });
+
+export default process.env.NODE_ENV === 'production' ? sentryConfig : nextConfig;

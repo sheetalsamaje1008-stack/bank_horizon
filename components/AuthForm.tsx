@@ -29,6 +29,7 @@ const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const formSchema = authFormSchema(type);
 
@@ -44,6 +45,7 @@ const AuthForm = ({ type }: { type: string }) => {
     // 2. Define a submit handler.
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
       setIsLoading(true);
+      setErrorMessage('');
 
       try {
         // Sign up with Appwrite & create plaid token
@@ -64,7 +66,14 @@ const AuthForm = ({ type }: { type: string }) => {
 
           const newUser = await signUp(userData);
 
-          setUser(newUser);
+          if (newUser?.error) {
+            setErrorMessage(newUser.error);
+            return;
+          }
+
+          if (newUser) {
+            setUser(newUser);
+          }
         }
 
         if(type === 'sign-in') {
@@ -73,10 +82,19 @@ const AuthForm = ({ type }: { type: string }) => {
             password: data.password,
           })
 
-          if(response) router.push('/')
+          if (response?.error) {
+            setErrorMessage(response.error);
+            return;
+          }
+
+          if(response) {
+            router.push('/');
+            router.refresh();
+          }
         }
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        console.error(error);
+        setErrorMessage(error?.message || 'Something went wrong. Please try again.');
       } finally {
         setIsLoading(false);
       }
@@ -118,6 +136,11 @@ const AuthForm = ({ type }: { type: string }) => {
         </div>
       ): (
         <>
+          {errorMessage && (
+            <div className="rounded-md bg-red-50 p-4 text-sm font-medium text-red-600 border border-red-200">
+              {errorMessage}
+            </div>
+          )}
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               {type === 'sign-up' && (

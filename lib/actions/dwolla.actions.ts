@@ -28,14 +28,22 @@ export const createFundingSource = async (
   options: CreateFundingSourceOptions
 ) => {
   try {
+    if (!options?.customerId || options.customerId === "undefined") {
+      return null;
+    }
     return await dwollaClient
       .post(`customers/${options.customerId}/funding-sources`, {
         name: options.fundingSourceName,
         plaidToken: options.plaidToken,
       })
       .then((res) => res.headers.get("location"));
-  } catch (err) {
-    console.error("Creating a Funding Source Failed: ", err);
+  } catch (err: any) {
+    if (err?.body?.code === "NotFound" || err?.message?.includes("NotFound")) {
+      console.warn("Dwolla customer not found in sandbox environment; skipping funding source creation.");
+      return null;
+    }
+    console.error("Creating a Funding Source Failed: ", err?.message || err);
+    return null;
   }
 };
 
@@ -69,6 +77,11 @@ export const createTransfer = async ({
   amount,
 }: TransferParams) => {
   try {
+    if (!sourceFundingSourceUrl || !destinationFundingSourceUrl) {
+      console.warn("Dwolla createTransfer: source or destination funding source URL is missing; skipping Dwolla ACH call.");
+      return null;
+    }
+
     const requestBody = {
       _links: {
         source: {
@@ -97,6 +110,10 @@ export const addFundingSource = async ({
   bankName,
 }: AddFundingSourceParams) => {
   try {
+    if (!dwollaCustomerId || dwollaCustomerId === "undefined") {
+      return null;
+    }
+
     // create dwolla auth link
     const dwollaAuthLinks = await createOnDemandAuthorization();
 
@@ -109,6 +126,7 @@ export const addFundingSource = async ({
     };
     return await createFundingSource(fundingSourceOptions);
   } catch (err) {
-    console.error("Transfer fund failed: ", err);
+    console.warn("Dwolla add funding source failed:", err);
+    return null;
   }
 };

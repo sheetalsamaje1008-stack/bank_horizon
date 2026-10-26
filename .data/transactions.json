@@ -1,0 +1,28 @@
+[
+  {
+    "$id": "tx_1792941021147_ryj52am",
+    "$createdAt": "2026-10-25T15:10:21.147Z",
+    "channel": "online",
+    "category": "Transfer",
+    "name": "Rent payment",
+    "amount": "50.00",
+    "senderId": "6adcaa060000f15b0dc2",
+    "senderBankId": "bank_GMN5abDl1mteXqxlyywKF6PWlJnr8xf6846g3",
+    "receiverId": "external",
+    "receiverBankId": "external",
+    "email": "landlord@example.com"
+  },
+  {
+    "$id": "tx_1792941590822_nmuatqe",
+    "$createdAt": "2026-10-25T15:19:50.822Z",
+    "channel": "online",
+    "category": "Transfer",
+    "name": "money\n",
+    "amount": "10.00",
+    "senderId": "6adcaa060000f15b0dc2",
+    "senderBankId": "bank_GMN5abDl1mteXqxlyywKF6PWlJnr8xf6846g3",
+    "receiverId": "6adcaa060000f15b0dc2",
+    "receiverBankId": "bank_1792940182553_rjnupfi",
+    "email": "invalid@test.com"
+  }
+]

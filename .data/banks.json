@@ -1,0 +1,22 @@
+[
+  {
+    "$id": "bank_GMN5abDl1mteXqxlyywKF6PWlJnr8xf6846g3",
+    "$createdAt": "2026-10-25T14:25:31.196Z",
+    "userId": "6adcaa060000f15b0dc2",
+    "bankId": "EQk5xRDyZ6cjb9nAddvkIArjN5ADBwSj36wwJ",
+    "accountId": "GMN5abDl1mteXqxlyywKF6PWlJnr8xf6846g3",
+    "accessToken": "access-sandbox-c48e0d23-b17c-453f-8e3d-4773d8313836",
+    "fundingSourceUrl": "",
+    "shareableId": "R01ONWFiRGwxbXRlWHF4bHl5d0tGNlBXbEpuUjh4ZjY4NDZnMw=="
+  },
+  {
+    "$id": "bank_1792940182553_rjnupfi",
+    "userId": "6adcaa060000f15b0dc2",
+    "bankId": "LEnnzovbaZTdkGppDKBdfjzyXR4xz8fLz6eRk",
+    "accountId": "wnyyeJM5lVslavDDBy1lfrVLpXVjVLfPNaWzW",
+    "accessToken": "access-sandbox-a159e550-aee2-4550-b54c-165e420c3eca",
+    "fundingSourceUrl": "",
+    "shareableId": "d255eWVKTTVsVnNsYXZEREJ5MWxmclZMcFhWalZMZlBOYVd6Vw==",
+    "$createdAt": "2026-10-25T14:56:22.553Z"
+  }
+]

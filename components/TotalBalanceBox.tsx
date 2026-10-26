@@ -1,5 +1,7 @@
+import dynamic from 'next/dynamic';
 import AnimatedCounter from './AnimatedCounter';
-import DoughnutChart from './DoughnutChart';
+
+const DoughnutChart = dynamic(() => import('./DoughnutChart'), { ssr: false });
 
 const TotalBalanceBox = ({
   accounts = [], totalBanks, totalCurrentBalance

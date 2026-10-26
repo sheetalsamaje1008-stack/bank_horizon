@@ -76,7 +76,8 @@ export function formatAmount(amount: number): string {
   return formatter.format(amount);
 }
 
-export const parseStringify = (value: any) => JSON.parse(JSON.stringify(value));
+export const parseStringify = (value: any) =>
+  value !== undefined ? JSON.parse(JSON.stringify(value)) : null;
 
 export const removeSpecialCharacters = (value: string) => {
   return value.replace(/[^\w\s]/gi, "");
@@ -184,7 +185,12 @@ export function encryptId(id: string) {
 }
 
 export function decryptId(id: string) {
-  return atob(id);
+  if (!id) return "";
+  try {
+    return atob(id.trim());
+  } catch {
+    return id.trim();
+  }
 }
 
 export const getTransactionStatus = (date: Date) => {
